@@ -1,9 +1,7 @@
 # Oracle Application Express (APEX) Projects
 Created by Stephen Cloete
 
-A Collection of Oracle APEX Projects
-
-# Projects
+# A Collection of Oracle APEX Projects
 
 ## apex-blogger 
 
@@ -22,14 +20,12 @@ A Collection of Oracle APEX Projects
 ## apex-inventory-control
 
 ## apex-mobile 
-*(IONIC Cordova Application hosting Oracle APEX)
+IONIC Cordova Application hosting Oracle APEX
 
 ## apex-mycv
 
 ## apex-ridesharing 
-*(LOOP Ridesharing https://loop-ridesharing.co.za)
-
-
+LOOP Ridesharing https://loop-ridesharing.co.za
 
 ## Documentation
 
