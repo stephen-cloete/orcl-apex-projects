@@ -10,21 +10,21 @@ Created by Stephen Cloete
 # A Collection of my Oracle APEX Projects
 
 ## apex-blogger 
-
+TODO
 ## apex-data-explorer
-
+TODO
 ## apex-database-monitoring
-
+TODO
 ## apex-dropzone-dataloader
-
+TODO
 ## apex-file-manager
-
+TODO
 ## apex-guest-house
-
+TODO
 ## apex-health-monitor
-
+TODO
 ## apex-inventory-control
-
+TODO
 ## apex-mobile 
 IONIC Cordova Application hosting Oracle APEX
 
