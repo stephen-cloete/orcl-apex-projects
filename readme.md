@@ -68,7 +68,8 @@ In our setup it is going to be used because of ability to be flexibly configured
 Apache httpd is a standard de-facto when it comes to HTTP server software. I think it is extra to tell more about it. We are going to use it because it gives us even more freedom in configuration and because Apache httpd is the fastest solution when it comes to static files such as pictures, style sheets and so on. In our setup it will serve APEX static files and will be reverse-proxying requests to ORDS deployed to Tomcat using the special AJP protocol, which eliminates HTTP-like overhead.
 
 
-### Creating an Oracle APEX 18.2 VM on CentOS 7
+### Creating an Oracle APEX VM on CentOS
+
 **Part 1 CentOS Linux 7**
 
 Step 1: Signup for an account via **https://www.digitalocean.com/**
