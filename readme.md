@@ -147,9 +147,13 @@ sudo tar xvf apache-tomcat-9*tar.gz -C /opt/tomcat --strip-components=1
 ```
 
 * Add Tomcat User & Ownership Change
-sudo groupadd tomcat
-sudo useradd -M -s /bin/nologin -g tomcat -d /opt/tomcat tomcat
-chown -R tomcat:tomcat /opt/tomcat/
+
+```sudo groupadd tomcat```
+
+```sudo useradd -M -s /bin/nologin -g tomcat -d /opt/tomcat tomcat```
+
+```chown -R tomcat:tomcat /opt/tomcat/```
+
 
 * Create the a systemd file with the following content
 ```vi /etc/systemd/system/tomcat.service```
@@ -184,7 +188,9 @@ WantedBy=multi-user.target
 ```
  
 * Create Tomcat 9 ADMIN User Account
+
 You can create a new Tomcat user in order to be able to acess the Tomcat manager. Open the tomcat-users.xml file and add the following lines:
+
 ```vi  /opt/tomcat/conf/tomcat-users.xml```
 
 ```
@@ -194,7 +200,8 @@ You can create a new Tomcat user in order to be able to acess the Tomcat manager
 ```
 
 * Tomcat Manager is only accessible from a browser running on the same machine as Tomcat. If you want to remove this restriction, you’ll need to edit the Manager’s context.xml file, and comment out or remove the following line:
-vi /opt/tomcat/webapps/manager/META-INF/content.xml
+
+```vi /opt/tomcat/webapps/manager/META-INF/content.xml```
 
 ```
 <Valve className="org.apache.catalina.valves.RemoteAddrValve"
@@ -202,7 +209,9 @@ allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" />
 ```
 
 * Access Tomcat Server from a web browser
+
 ```sudo firewall-cmd --permanent --zone=public --add-port=8080/tcp```
+
 ```firewall-cmd –reload```
 
 * ORDS.war and Apache Tomcat
@@ -220,4 +229,4 @@ mv images i
 ```
 service tomcat reload
 ```
-Oracle Application Express should be accessible via http://<Host Name>:8080/ords/
+Oracle Application Express should be accessible via **http://Host Name:8080/ords/**
