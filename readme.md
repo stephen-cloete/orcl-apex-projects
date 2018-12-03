@@ -82,6 +82,7 @@ Apache httpd is a standard de-facto when it comes to HTTP server software. I thi
 **Part 2 Configuration of CentOS Linux 7**
 
 Login as ROOT and execute the following
+
 ```
 yum update
 
@@ -91,6 +92,7 @@ yum install rlwrap -y
 ```
 
 **Installation of Docker**
+
 ```
 curl -fsSL https://get.docker.com/ | sh 
 or yum install docker
@@ -108,6 +110,7 @@ systemctl enable docker
 * Please follow Adrian Ping https://github.com/fuzziebrain/docker-oracle-xe/blob/master/docs/apex-install.md
 
 **Part 5: Installation of Oracle Restful Services**
+
 Download ORDS from OTN
 
 * 	```mkdir  /opt/oracle/ords```
@@ -187,7 +190,7 @@ Restart=always
 WantedBy=multi-user.target
 ```
  
-* Create Tomcat 9 ADMIN User Account
+* Create Tomcat ADMIN User Account
 
 You can create a new Tomcat user in order to be able to acess the Tomcat manager. Open the tomcat-users.xml file and add the following lines:
 
@@ -229,4 +232,4 @@ mv images i
 ```
 service tomcat reload
 ```
-Oracle Application Express should be accessible via **http://Host Name:8080/ords/**
+Oracle Application Express should be accessible via **http://HostName:8080/ords/**
