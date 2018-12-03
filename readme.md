@@ -9,22 +9,30 @@ Created by Stephen Cloete
 
 ## apex-blogger 
 TODO
+
 ## apex-data-explorer
 TODO
+
 ## apex-database-monitoring
 TODO
+
 ## apex-dropzone-dataloader
 TODO
+
 ## apex-file-manager
 TODO
+
 ## apex-guest-house
 TODO
+
 ## apex-health-monitor
 TODO
+
 ## apex-inventory-control
 TODO
+
 ## apex-mobile 
-IONIC Cordova Application hosting Oracle APEX
+IONIC Cordova Application hosting Oracle APEX Application
 
 ## apex-mycv
 My Personal CV https://apex.oracle.com/pls/apex/f?p=SC
@@ -39,7 +47,7 @@ simply go to https://apex.oracle.com/pls/apex/ and sign-up
 
 ### Getting Started with Oracle APEX on Digital Ocean Droplet
 
-If you'd rather like to have your own custom development environment have a look at the instructions below that I've compiled and used with special thanks to the original authors.
+If you'd rather like to have your own custom development environment have a look at the instructions below that I've compiled and used.
 
 ## Oracle APEX on Digital Ocean Droplet
 
