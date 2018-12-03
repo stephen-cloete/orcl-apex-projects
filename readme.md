@@ -5,8 +5,6 @@
 # Oracle Application Express (APEX) Projects
 Created by Stephen Cloete
 
-
-
 # A Collection of my Oracle APEX Projects
 
 ## apex-blogger 
@@ -34,7 +32,7 @@ My Personal CV https://apex.oracle.com/pls/apex/f?p=SC
 ## apex-ridesharing 
 LOOP Ridesharing https://loop-ridesharing.co.za
 
-# Documentation
+# Oracle APEX Getting Started Guide
 
 ###  Getting Started with Oracle APEX on apex.oracle.com
 simply go to https://apex.oracle.com/pls/apex/ and sign-up
