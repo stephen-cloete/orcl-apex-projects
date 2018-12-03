@@ -81,7 +81,7 @@ Apache httpd is a standard de-facto when it comes to HTTP server software. I thi
 
 **Part 2 Configuration of CentOS Linux 7**
 
-* Step 1: Login as ROOT and execute the following
+Login as ROOT and execute the following
 ```
 yum update
 
