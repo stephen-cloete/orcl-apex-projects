@@ -223,7 +223,7 @@ allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" />
 
 ```firewall-cmd –-reload```
 
-* ORDS.war and Apache Tomcat
+* ords.war and Apache Tomcat
 
 ```cp /opt/ords/ords.war /opt/tomcat/webapps/```
 
@@ -242,8 +242,8 @@ Oracle Application Express should be accessible via **http://HostName:8080/ords/
 
 **Part 7: Installation of Apache HTTP Server**
 * Download Apache HTTP Server ``` yum install httpd```
-* Copy APEX Images ```mkdir -p /var/www/apex/images``` 
-* Copy Images into the Folder ``` cp -a /PATH TO APEX/apex/images/. /var/www/apex/images ```
+* Create an APEX Images Folder ```mkdir -p /var/www/apex/images``` 
+* Copy Images into the Images Folder ``` cp -a /PATH TO APEX/apex/images/. /var/www/apex/images ```
 * Navagate to HTTPD ```cd /etc/httpd/conf.d``` 
 * Create a file called apex.conf ```vi apex.conf```
 * Copy the following into the new file
