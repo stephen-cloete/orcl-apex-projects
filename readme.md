@@ -134,24 +134,24 @@ If using Oracle Application Express or migrating from mod_plsql then you must en
 ```
 
 **Part 6: Installation of Apache Tomcat**
-* 1.	Download Tomcat
+* Download Tomcat
 ```
 wget http://mirror.za.web4africa.net/apache/tomcat/tomcat-9/v9.0.13/bin/apache-tomcat-9.0.13.tar.gz
 ```
 
-* 2.	Create tomcat folder and Unzip
+* Create tomcat folder and Unzip
 ```
 mkdir /opt/tomcat
 cp apache-tomcat-9.0.13.tar.gz /opt/tomcat
 sudo tar xvf apache-tomcat-9*tar.gz -C /opt/tomcat --strip-components=1
 ```
 
-* 3.	Add Tomcat User & Ownership Change
+* Add Tomcat User & Ownership Change
 sudo groupadd tomcat
 sudo useradd -M -s /bin/nologin -g tomcat -d /opt/tomcat tomcat
 chown -R tomcat:tomcat /opt/tomcat/
 
-* 4. Create the a systemd file with the following content
+* Create the a systemd file with the following content
 ```vi /etc/systemd/system/tomcat.service```
 
 ```
@@ -183,7 +183,7 @@ Restart=always
 WantedBy=multi-user.target
 ```
  
-* 5.	Create Tomcat 9 ADMIN User Account
+* Create Tomcat 9 ADMIN User Account
 You can create a new Tomcat user in order to be able to acess the Tomcat manager. Open the tomcat-users.xml file and add the following lines:
 ```vi  /opt/tomcat/conf/tomcat-users.xml```
 
@@ -193,7 +193,7 @@ You can create a new Tomcat user in order to be able to acess the Tomcat manager
 </tomcat-users>
 ```
 
-* 6. Tomcat Manager is only accessible from a browser running on the same machine as Tomcat. If you want to remove this restriction, you’ll need to edit the Manager’s context.xml file, and comment out or remove the following line:
+* Tomcat Manager is only accessible from a browser running on the same machine as Tomcat. If you want to remove this restriction, you’ll need to edit the Manager’s context.xml file, and comment out or remove the following line:
 vi /opt/tomcat/webapps/manager/META-INF/content.xml
 
 ```
@@ -201,22 +201,22 @@ vi /opt/tomcat/webapps/manager/META-INF/content.xml
 allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" />
 ```
 
-* 7. Access Tomcat Server from a web browser
+* Access Tomcat Server from a web browser
 ```sudo firewall-cmd --permanent --zone=public --add-port=8080/tcp```
 ```firewall-cmd –reload```
 
-* 8. ORDS.war and Apache Tomcat
+* ORDS.war and Apache Tomcat
 
 ```cp /opt/ords/ords.war /opt/tomcat/webapps/```
 
-* 9. i.war and Apache Tomcat
+* i.war and Apache Tomcat
 ```
 cp -a /<path to APEX Images/  /opt/tomcat/webapps/
 cd /opt/tomcat/webapps/
 mv images i
 ```
 
-* 10. Restart Tomcat
+* Restart Tomcat
 ```
 service tomcat reload
 ```
