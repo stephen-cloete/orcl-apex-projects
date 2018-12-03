@@ -110,11 +110,11 @@ systemctl enable docker
 **Part 5: Installation of Oracle Restful Services**
 Download ORDS from OTN
 
-* 1.	```mkdir  /opt/oracle/ords```
-* 2.	```mkdir /opt/oracle/ords/config```
-* 3.	```cp ords-18.*.zip onto /opt/ords and unzip ords-18.*.zip ```
-* 4.	```cd /opt/oracle/ords```
-* 5.	```java -jar ords.war install```
+* 	```mkdir  /opt/oracle/ords```
+* 	```mkdir /opt/oracle/ords/config```
+* 	```cp ords-18.*.zip onto /opt/ords and unzip ords-18.*.zip ```
+* 	```cd /opt/oracle/ords```
+* 	```java -jar ords.war install```
 
 ```
 Enter the location to store configuration data:/opt/ords/config
@@ -131,22 +131,6 @@ Confirm password:
 Retrieving information.
 Enter 1 if you want to use PL/SQL Gateway or 2 to skip this step.
 If using Oracle Application Express or migrating from mod_plsql then you must enter 1 [1]:1
-```
-
-#### SQLPLUS SYS AS SYSDBA for any issues
-```
-ALTER USER APEX_PUBLIC_USER IDENTIFIED BY <Password> ACCOUNT UNLOCK;
-ALTER USER APEX_LISTENER IDENTIFIED BY <Password> ACCOUNT UNLOCK;
-ALTER USER ORDS_PUBLIC_USER IDENTIFIED BY <Password> ACCOUNT UNLOCK;
-ALTER USER APEX_REST_PUBLIC_USER IDENTIFIED BY <Password> ACCOUNT UNLOCK;
-```
-
-**Monitoring ORDS**
-```
-SELECT username, status, COUNT (*) cnt
-FROM v$session
-WHERE username LIKE '%APEX%' OR username LIKE '%ORDS%'
-GROUP BY username, status;
 ```
 
 **Part 6: Installation of Apache Tomcat**
