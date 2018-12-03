@@ -34,14 +34,16 @@ My Personal CV https://apex.oracle.com/pls/apex/f?p=SC
 ## apex-ridesharing 
 LOOP Ridesharing https://loop-ridesharing.co.za
 
-## Documentation
+# Documentation
 
-# Getting Started with Oracle APEX on Digital Ocean Droplet
+###  Getting Started with Oracle APEX on apex.oracle.com
+simply go to https://apex.oracle.com/pls/apex/ and sign-up
 
-Getting Started is as simple as going to https://apex.oracle.com/pls/apex/ and signing up however if you'd like your own custom development environment have a look at the instructions below with special thanks to the original authors.
+### Getting Started with Oracle APEX on Digital Ocean Droplet
 
+If you'd rather like to have your own custom development environment have a look at the instructions below that I've compiled and used with special thanks to the original authors.
 
-Oracle APEX on Digital Ocean Droplet
+## Oracle APEX on Digital Ocean Droplet
 
 On Digital Ocean , I've setup the following technologies:
 
