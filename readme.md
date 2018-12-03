@@ -75,7 +75,7 @@ Apache httpd is a standard de-facto when it comes to HTTP server software. I thi
 **Part 1 CentOS Linux 7**
 
 * Step 1: Signup for an account via **https://www.digitalocean.com/**
-* Step 2: Create Droplet by choosing an image being CentOS 7.5 x64 and I've gone for the $20/mo plan with 4GB Ram / 2CPU's and 80GB Storage
+* Step 2: Create Droplet by choosing an image being CentOS 7.5 x64 and I've gone for the $20/mo plan with 4GB Ram / 2 CPU's and 80GB Storage
 * Step 3: Select a Datacenter Region and I recommend selecting Monitoring with the Additional Options which provides you with an graphical representation of your Droplet. 
 * Step 4: provide a hostname and select Create
 
@@ -90,7 +90,7 @@ yum install java-1.8.0-openjdk.x86_64 java-1.8.0-openjdk-devel.x86_64 mc net-too
 yum install rlwrap -y
 ```
 
-**Part 2: Installation of Docker**
+**Installation of Docker**
 ```
 curl -fsSL https://get.docker.com/ | sh 
 or yum install docker
