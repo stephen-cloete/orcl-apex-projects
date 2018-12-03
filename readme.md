@@ -221,7 +221,7 @@ allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" />
 
 ```sudo firewall-cmd --permanent --zone=public --add-port=8080/tcp```
 
-```firewall-cmd –reload```
+```firewall-cmd –-reload```
 
 * ORDS.war and Apache Tomcat
 
@@ -239,3 +239,61 @@ mv images i
 service tomcat reload
 ```
 Oracle Application Express should be accessible via **http://HostName:8080/ords/**
+
+**Part 7: Installation of Apache HTTP Server**
+* Download Apache HTTP Server ``` yum install httpd```
+* Copy APEX Images ```mkdir -p /var/www/apex/images``` 
+* Copy Images into the Folder ``` cp -a /PATH TO APEX/apex/images/. /var/www/apex/images ```
+* Navagate to HTTPD ```cd /etc/httpd/conf.d``` 
+* Create a file called apex.conf ```vi apex.conf```
+* Copy the following into the new file
+
+```
+# customized Apache configuration
+
+# disable sensitive version info
+ServerSignature Off
+ServerTokens Prod
+
+# standard alias for Apex image files
+Alias /i/ " /var/www/apex/images/"
+
+# forward dynamic (ORDS) requests to Tomcat
+<VirtualHost *:80>
+  ProxyRequests Off
+  ProxyPreserveHost On
+  <Proxy *>
+    Order deny,allow
+    Allow from all
+  </Proxy>
+  ProxyPass /ords ajp://localhost:8009/ords
+  ProxyPassReverse /ords ajp://localhost:8009/ords
+</VirtualHost>
+
+# enable compression of static content
+<IfModule mod_deflate.c>
+   SetOutputFilter DEFLATE
+   AddOutputFilterByType DEFLATE text/plain text/html text/xml text/css text/javascript
+</IfModule>
+
+# enable client caching of static content
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/gif "access plus 7 days"
+  ExpiresByType image/jpeg "access plus 7 days"
+  ExpiresByType image/png "access plus 7 days"
+  ExpiresByType text/css "access plus 7 days"
+  ExpiresByType text/javascript "access plus 7 days"
+  ExpiresByType application/javascript "access plus 7 days"
+  ExpiresByType application/x-javascript "access plus 7 days"
+</IfModule>
+```
+
+* Allow Apache HTTP Server through the Firewall
+```
+sudo firewall-cmd --permanent --zone=public --add-port=80/tcp
+firewall-cmd --reload
+```
+
+* Testing Apache HTTP Server
+**http://HostName/ords**
