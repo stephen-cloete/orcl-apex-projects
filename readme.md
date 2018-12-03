@@ -74,14 +74,14 @@ Apache httpd is a standard de-facto when it comes to HTTP server software. I thi
 
 **Part 1 CentOS Linux 7**
 
-Step 1: Signup for an account via **https://www.digitalocean.com/**
-Step 2: Create Droplet by choosing an image being CentOS 7.5 x64 and I've gone for the $20/mo plan with 4GB Ram / 2CPU's and 80GB Storage
-Setp 3: Select a Datacenter Region and I recommend selecting Monitoring with the Additional Options which provides you with an graphical representation of your Droplet. 
-Step 4: provide a hostname and select Create
+* Step 1: Signup for an account via **https://www.digitalocean.com/**
+* Step 2: Create Droplet by choosing an image being CentOS 7.5 x64 and I've gone for the $20/mo plan with 4GB Ram / 2CPU's and 80GB Storage
+* Step 3: Select a Datacenter Region and I recommend selecting Monitoring with the Additional Options which provides you with an graphical representation of your Droplet. 
+* Step 4: provide a hostname and select Create
 
-Part 2 Configuration of CentOS Linux 7
+**Part 2 Configuration of CentOS Linux 7**
 
-Step 1: Login as ROOT and execute the following
+* Step 1: Login as ROOT and execute the following
 ```
 yum update
 
@@ -101,20 +101,20 @@ systemctl enable docker
 ```
 **Part 3: Installation of Oracle 18c XE Database within Docker**
 
-Please follow Adrian Ping https://github.com/fuzziebrain/docker-oracle-xe
+* Please follow Adrian Ping https://github.com/fuzziebrain/docker-oracle-xe
 
 **Part 4: Installation of Oracle APEX within Docker**
 
-Please follow Adrian Ping https://github.com/fuzziebrain/docker-oracle-xe/blob/master/docs/apex-install.md
+* Please follow Adrian Ping https://github.com/fuzziebrain/docker-oracle-xe/blob/master/docs/apex-install.md
 
 **Part 5: Installation of Oracle Restful Services**
 Download ORDS from OTN
 
-1.	```mkdir  /opt/oracle/ords```
-2.	```mkdir /opt/oracle/ords/config```
-3.	```cp ords-18.*.zip onto /opt/ords and unzip ords-18.*.zip ```
-4.	```cd /opt/oracle/ords```
-5.	```java -jar ords.war install```
+* 1.	```mkdir  /opt/oracle/ords```
+* 2.	```mkdir /opt/oracle/ords/config```
+* 3.	```cp ords-18.*.zip onto /opt/ords and unzip ords-18.*.zip ```
+* 4.	```cd /opt/oracle/ords```
+* 5.	```java -jar ords.war install```
 
 ```
 Enter the location to store configuration data:/opt/ords/config
@@ -150,24 +150,24 @@ GROUP BY username, status;
 ```
 
 **Part 6: Installation of Apache Tomcat**
-1.	Download Tomcat
+* 1.	Download Tomcat
 ```
 wget http://mirror.za.web4africa.net/apache/tomcat/tomcat-9/v9.0.13/bin/apache-tomcat-9.0.13.tar.gz
 ```
 
-2.	Create tomcat folder and Unzip
+* 2.	Create tomcat folder and Unzip
 ```
 mkdir /opt/tomcat
 cp apache-tomcat-9.0.13.tar.gz /opt/tomcat
 sudo tar xvf apache-tomcat-9*tar.gz -C /opt/tomcat --strip-components=1
 ```
 
-3.	Add Tomcat User & Ownership Change
+* 3.	Add Tomcat User & Ownership Change
 sudo groupadd tomcat
 sudo useradd -M -s /bin/nologin -g tomcat -d /opt/tomcat tomcat
 chown -R tomcat:tomcat /opt/tomcat/
 
-Create the a systemd file with the following content
+* 4. Create the a systemd file with the following content
 ```vi /etc/systemd/system/tomcat.service```
 
 ```
@@ -199,7 +199,7 @@ Restart=always
 WantedBy=multi-user.target
 ```
  
-4.	Create Tomcat 9 user account
+* 5.	Create Tomcat 9 ADMIN User Account
 You can create a new Tomcat user in order to be able to acess the Tomcat manager. Open the tomcat-users.xml file and add the following lines:
 ```vi  /opt/tomcat/conf/tomcat-users.xml```
 
@@ -209,7 +209,7 @@ You can create a new Tomcat user in order to be able to acess the Tomcat manager
 </tomcat-users>
 ```
 
-Tomcat Manager is only accessible from a browser running on the same machine as Tomcat. If you want to remove this restriction, you’ll need to edit the Manager’s context.xml file, and comment out or remove the following line:
+* 6. Tomcat Manager is only accessible from a browser running on the same machine as Tomcat. If you want to remove this restriction, you’ll need to edit the Manager’s context.xml file, and comment out or remove the following line:
 vi /opt/tomcat/webapps/manager/META-INF/content.xml
 
 ```
@@ -217,22 +217,22 @@ vi /opt/tomcat/webapps/manager/META-INF/content.xml
 allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" />
 ```
 
-Access Tomcat Server from a web browser
+* 7. Access Tomcat Server from a web browser
 ```sudo firewall-cmd --permanent --zone=public --add-port=8080/tcp```
 ```firewall-cmd –reload```
 
-5. ORDS.war and Apache Tomcat
+* 8. ORDS.war and Apache Tomcat
 
 ```cp /opt/ords/ords.war /opt/tomcat/webapps/```
 
-6. i.war and Apache Tomcat
+* 9. i.war and Apache Tomcat
 ```
 cp -a /<path to APEX Images/  /opt/tomcat/webapps/
 cd /opt/tomcat/webapps/
 mv images i
 ```
 
-7. Restart Tomcat
+* 10. Restart Tomcat
 ```
 service tomcat reload
 ```
