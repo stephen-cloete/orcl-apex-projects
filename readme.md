@@ -214,9 +214,9 @@ vi /opt/tomcat/webapps/manager/META-INF/content.xml
 allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" />
 ```
 
-Access Tomcat  Server from a web browser
-sudo firewall-cmd --permanent --zone=public --add-port=8080/tcp
-firewall-cmd –reload
+Access Tomcat Server from a web browser
+```sudo firewall-cmd --permanent --zone=public --add-port=8080/tcp```
+```firewall-cmd –reload```
 
 5. ORDS.war and Apache Tomcat
 
@@ -233,3 +233,4 @@ mv images i
 ```
 service tomcat reload
 ```
+Oracle Application Express should be accessible via http://<Host Name>:8080/ords/
