@@ -45,28 +45,27 @@ Oracle APEX on Digital Ocean Droplet
 
 On Digital Ocean , I've setup the following technologies:
 
-CentOS Linux 7
+**CentOS Linux 7**
 CentOS is a community driven version of a very reliable RPM-based commercial linux distribution called RHEL (Red Hat Enterprise Linux). Each time a new version of RHEL comes out, they have to share their source code to public (due to licence limitations), and contributors of CentOS take this new version, re-brand, compile and distribute it for free (CentOS stands for Community enterprise Operating System). There's also another option - Oracle Linux, which developers do almost the same, but the CentOS community.
 
-Oracle Database XE within Docker
+**Oracle Database XE within Docker**
 APEX engine lives inside the Oracle Database. It's available for free and can be installed into its Express Edition as well, which is a totally free option. Current version of the RDBMS is 18c. How due to the fact that this is only a limited free version of the RDBMS, it offers a lot of great features, which were usually included only with the Enterprise Edition of it.
 
-Oracle APEX
+**Oracle APEX**
 Low-code web development platform. Quoting the official website, it enables you to design, develop and deploy beautiful, responsive, database-driven applications using only your web browser. It is a free Oracle Database feature. APEX needs a web listener to function - and there're three options available at the moment:
 1.	Embedded PL/SQL Gateway (EPG) - it is a built-in Oracle XDB feature. It is not recommended to be used in production environments, because it's not as fast and as reliable as other options. Though it surely could be used for development and testing purposes.
 2.	mod_plsql with Oracle HTTP Server - this is an obsolete option which is not recommended to be used anymore.
 3.	Oracle Rest Data Services (ORDS) - the option which is officially recommended for production use by Oracle and the one we will be observing here.
 
-
-ORDS
+**ORDS**
 ORDS is a Java EE-based web application which can run in standalone mode or could be deployed to an application server such as Oracle WebLogic, GlassFish or Apache Tomcat. When run in standalone mode, it leverages a built-in web server powered by Jetty.
 Besides being a listener for APEX, ORDS could be used to implement RESTful APIsfor your databases. And by saying databases I mean relational databases, document stores and even Oracle NoSQL Database.
 
-Apache Tomcat
+**Apache Tomcat**
 The Apache Tomcat software is an open source implementation of the Java Servlet, JavaServer Pages, Java Expression Language and Java WebSocket technologies. It is a really powerful and fast application server, which is totally free piece of software and is community driven. At the time it is the most commonly used application server for Java applications.
 In our setup it is going to be used because of ability to be flexibly configured and for security reasons. It is also much more convenient to use Tomcat service instead of standalone mode of ORDS.
 
-Apache httpd
+**Apache httpd**
 Apache httpd is a standard de-facto when it comes to HTTP server software. I think it is extra to tell more about it. We are going to use it because it gives us even more freedom in configuration and because Apache httpd is the fastest solution when it comes to static files such as pictures, style sheets and so on. In our setup it will serve APEX static files and will be reverse-proxying requests to ORDS deployed to Tomcat using the special AJP protocol, which eliminates HTTP-like overhead.
 
 
@@ -99,33 +98,38 @@ systemctl status docker
 systemctl enable docker 
 ```
 **Part 3: Installation of Oracle 18c XE Database within Docker**
+
 Please follow Adrian Ping https://github.com/fuzziebrain/docker-oracle-xe
 
 **Part 4: Installation of Oracle APEX within Docker**
+
 Please follow Adrian Ping https://github.com/fuzziebrain/docker-oracle-xe/blob/master/docs/apex-install.md
 
 **Part 5: Installation of Oracle Restful Services**
 Download ORDS from OTN
 
-1.	mkdir  /opt/oracle/ords
-2.	mkdir /opt/oracle/ords/config
-3.	cp ords-18.*.zip onto /opt/ords and unzip ords-18.*.zip 
-4.	cd /opt/oracle/ords
-5.	java -jar ords.war install
-6.	Enter the location to store configuration data:/opt/ords/config
-7.	Enter the name of the database server [localhost]:localhost
-8.	Enter the database listen port [1521]:32118
-9.	Enter 1 to specify the database service name, or 2 to specify the database SID [1]:1
-10.	Enter the database service name:XEPDB1
-11.	Enter the database password for ORDS_PUBLIC_USER:
+1.	```mkdir  /opt/oracle/ords```
+2.	```mkdir /opt/oracle/ords/config```
+3.	```cp ords-18.*.zip onto /opt/ords and unzip ords-18.*.zip ```
+4.	```cd /opt/oracle/ords```
+5.	```java -jar ords.war install```
+
+```
+Enter the location to store configuration data:/opt/ords/config
+Enter the name of the database server [localhost]:localhost
+Enter the database listen port [1521]:32118
+Enter 1 to specify the database service name, or 2 to specify the database SID [1]:1
+Enter the database service name:XEPDB1
+Enter the database password for ORDS_PUBLIC_USER:
 Confirm password:
 Requires SYS AS SYSDBA to verify Oracle REST Data Services schema.
 
-12.	Enter the database password for SYS AS SYSDBA:
+Enter the database password for SYS AS SYSDBA:
 Confirm password:
 Retrieving information.
-13.	Enter 1 if you want to use PL/SQL Gateway or 2 to skip this step.
+Enter 1 if you want to use PL/SQL Gateway or 2 to skip this step.
 If using Oracle Application Express or migrating from mod_plsql then you must enter 1 [1]:1
+```
 14. Don't start ORDS Standalone
 
 15. SQLPLUS SYS AS SYSDBA
@@ -195,7 +199,8 @@ WantedBy=multi-user.target
  
 4.	Create Tomcat 9 user account
 You can create a new Tomcat user in order to be able to acess the Tomcat manager. Open the tomcat-users.xml file and add the following lines:
-Vi  /opt/tomcat/conf/tomcat-users.xml
+```vi  /opt/tomcat/conf/tomcat-users.xml```
+
 ```
 <role rolename="admin-gui" />
 <user username="admin" password="PASSWORD" roles="manager-gui,admin-gui"
