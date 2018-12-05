@@ -58,10 +58,10 @@ On Digital Ocean , I've setup the following technologies with the assistance of 
 **Morten Braten https://ora-00001.blogspot.com/**
 
 ### **CentOS Linux 7**
-CentOS is a community driven version of a very reliable RPM-based commercial linux distribution called RHEL (Red Hat Enterprise Linux). Each time a new version of RHEL comes out, they have to share their source code to public (due to licence limitations), and contributors of CentOS take this new version, re-brand, compile and distribute it for free (CentOS stands for Community enterprise Operating System). There's also another option - Oracle Linux, which developers do almost the same, but the CentOS community.
+CentOS is a community driven version of a very reliable RPM-based commercial linux distribution called RHEL (Red Hat Enterprise Linux). 
 
 ### **Oracle Database XE within Docker**
-APEX engine lives inside the Oracle Database. It's available for free and can be installed into its Express Edition as well, which is a totally free option. Current version of the RDBMS is 18c. How due to the fact that this is only a limited free version of the RDBMS, it offers a lot of great features, which were usually included only with the Enterprise Edition of it.
+APEX engine lives inside the Oracle Database. It's available for free and can be installed into its Express Edition (XE), which is a totally free option. Please note* Oracle 18c XE does have restrictions CPU's , RAM and Storage
 
 ### **Oracle APEX**
 Low-code web development platform. Quoting the official website, it enables you to design, develop and deploy beautiful, responsive, database-driven applications using only your web browser. It is a free Oracle Database feature. APEX needs a web listener to function - and there're three options available at the moment:
@@ -91,7 +91,7 @@ Apache httpd is a standard de-facto when it comes to HTTP server software. I thi
 
 **Part 2 Configuration of CentOS Linux 7**
 
-Login as ROOT and execute the following
+Login as ROOT or su ROOT and execute the following
 
 ```
 yum update
@@ -105,7 +105,8 @@ yum install rlwrap -y
 
 ```
 curl -fsSL https://get.docker.com/ | sh 
-or yum install docker
+Or
+yum install docker
 
 systemctl start docker
 systemctl status docker
@@ -113,11 +114,11 @@ systemctl enable docker
 ```
 **Part 3: Installation of Oracle 18c XE Database within Docker**
 
-* Please follow Adrian Ping https://github.com/fuzziebrain/docker-oracle-xe
+* Please follow Adrian Ping Step-by-step guide here https://github.com/fuzziebrain/docker-oracle-xe
 
 **Part 4: Installation of Oracle APEX within Docker**
 
-* Please follow Adrian Ping https://github.com/fuzziebrain/docker-oracle-xe/blob/master/docs/apex-install.md
+* Please follow Adrian Ping Step-by-step guide here https://github.com/fuzziebrain/docker-oracle-xe/blob/master/docs/apex-install.md
 
 **Part 5: Installation of Oracle Restful Services**
 
@@ -184,6 +185,7 @@ Environment=JAVA_HOME=/usr/lib/jvm/jre
 Environment=CATALINA_PID=/opt/tomcat/temp/tomcat.pid
 Environment=CATALINA_HOME=/opt/tomcat
 Environment=CATALINA_BASE=/opt/tomcat
+# Adjust CATALINA Options as required
 Environment='CATALINA_OPTS=-Xms1024M -Xmx2056M -server -XX:+UseParallelGC'
 Environment='JAVA_OPTS=-Djava.awt.headless=true -Djava.security.egd=file:/dev/./urandom'
 
@@ -208,7 +210,7 @@ You can create a new Tomcat user in order to be able to acess the Tomcat manager
 
 ```
 <role rolename="admin-gui" />
-<user username="admin" password="PASSWORD" roles="manager-gui,admin-gui"
+<user username="admin" password="ANY STRONG PASSWORD" roles="manager-gui,admin-gui"
 </tomcat-users>
 ```
 
@@ -233,7 +235,7 @@ allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" />
 
 * i.war and Apache Tomcat
 ```
-cp -a /<path to APEX Images/  /opt/tomcat/webapps/
+cp -a /<path to APEX Images>/  /opt/tomcat/webapps/
 cd /opt/tomcat/webapps/
 mv images i
 ```
@@ -242,12 +244,12 @@ mv images i
 ```
 service tomcat reload
 ```
-Oracle Application Express should be accessible via **http://HostName:8080/ords/**
+Oracle Application Express should be accessible via **http://hostname:8080/ords/**
 
 **Part 7: Installation of Apache HTTP Server**
 * Download Apache HTTP Server ``` yum install httpd```
 * Create an APEX Images Folder ```mkdir -p /var/www/apex/images``` 
-* Copy Images into the Images Folder ``` cp -a /PATH TO APEX/apex/images/. /var/www/apex/images ```
+* Copy Images into the Images Folder ``` cp -a /opt/tomcat/webapps/i/. /var/www/apex/images ```
 * Navagate to HTTPD ```cd /etc/httpd/conf.d``` 
 * Create a file called apex.conf ```vi apex.conf```
 * Copy the following into the new file
@@ -300,4 +302,4 @@ firewall-cmd --reload
 ```
 
 * Testing Apache HTTP Server
-**http://HostName/ords**
+**http://hostname/ords**
