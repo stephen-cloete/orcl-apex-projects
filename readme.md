@@ -51,7 +51,9 @@ If you'd rather like to have your own custom development environment have a look
 
 ## Oracle APEX on Digital Ocean Droplet
 
-On Digital Ocean , I've setup the following technologies:
+On Digital Ocean , I've setup the following technologies with the assistance of these guides:
+Denis Savenko https://dsavenko.me/author/dsavenko/
+Morten Braten https://ora-00001.blogspot.com/
 
 ### **CentOS Linux 7**
 CentOS is a community driven version of a very reliable RPM-based commercial linux distribution called RHEL (Red Hat Enterprise Linux). Each time a new version of RHEL comes out, they have to share their source code to public (due to licence limitations), and contributors of CentOS take this new version, re-brand, compile and distribute it for free (CentOS stands for Community enterprise Operating System). There's also another option - Oracle Linux, which developers do almost the same, but the CentOS community.
