@@ -247,7 +247,7 @@ service tomcat reload
 Oracle Application Express should be accessible via **http://hostname:8080/ords/**
 
 **Part 7: Installation of Apache HTTP Server**
-* Download Apache HTTP Server ``` yum install httpd```
+* Download Apache HTTP Server ``` yum install httpd``` and  ```yum install mod_ssl```
 * Create an APEX Images Folder ```mkdir -p /var/www/apex/images``` 
 * Copy Images into the Images Folder ``` cp -a /opt/tomcat/webapps/i/. /var/www/apex/images ```
 * Navagate to HTTPD ```cd /etc/httpd/conf.d``` 
