@@ -114,15 +114,19 @@ systemctl enable docker
 ```
 **Part 3: Installation of Oracle 18c XE Database within Docker**
 
+Oracle 18c XE URL: https://www.oracle.com/technetwork/database/database-technologies/express-edition/downloads/index.html
+
 * Please follow Adrian Ping Step-by-step guide here https://github.com/fuzziebrain/docker-oracle-xe
 
 **Part 4: Installation of Oracle APEX within Docker**
+
+Oracle APEX URL: https://www.oracle.com/technetwork/developer-tools/apex/downloads/index.html
 
 * Please follow Adrian Ping Step-by-step guide here https://github.com/fuzziebrain/docker-oracle-xe/blob/master/docs/apex-install.md
 
 **Part 5: Installation of Oracle Restful Services**
 
-Download ORDS from OTN
+Download ORDS from OTN: https://www.oracle.com/technetwork/developer-tools/rest-data-services/downloads/index.html
 
 * 	```mkdir  /opt/oracle/ords```
 * 	```mkdir /opt/oracle/ords/config```
