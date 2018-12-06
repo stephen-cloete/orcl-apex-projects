@@ -17,7 +17,9 @@ cross-platform tool for monitoring and metric analytics, with
 beautiful and customizable dashboards. It is a de facto software for data
 analytics.
 
-### Instalation
+# Instalation
+
+## Install Glances in CentOS 7
 
 ***Step 1*** Install Glances in CentOS 7
 
@@ -65,6 +67,8 @@ developer using wget command as shown:
 Python InfluxdDB lib, which you can install it using pip command.
 
 ```sudo pip install influxdb```
+
+## Install InfluxDB in CentOS 7
 
 ***Step 5.*** Install InfluxDB in CentOS 7 by adding the InfluxDB Yum repository to install latest
 vesrion of InfluxDB package as shown.
@@ -133,6 +137,7 @@ systemctl start glances.service
 systemctl status glances.service
 systemctl enable glances.service
 ```
+## Install Grafana in CentOS 7
 
 ***Step 7.*** Now, install Grafana from its official YUM repository, start by adding the
 following configuration to /etc/yum.repos.d/grafana.repo repository file.
@@ -190,16 +195,22 @@ receive a feedback indicating “Data source is working”.
  Now you need to import the Glances dashboard. Click on the plus (+)
 and go to Import
 
-Step 13. You will need either the Glances Dashboard URL or ID or upload its
+***Step 12.*** You will need either the Glances Dashboard URL or ID or upload its
 .JSON file which you can find from Grafana.com. In this case, we will use
 the Glances Dashboard created by the developer of Glances, its URL is
 https://grafana.com/dashboards/2387 or ID is 2387.
 
-Step 14. Once the Grafana dashboard has been loaded, under options, find
+***Step 13.*** Once the Grafana dashboard has been loaded, under options, find
 glances and choose an InluxDB data source (Glances Import) which you
 created earlier on, then click on Import.
 
-Step 15. After successfully importing the Glances dashboard, you should be able
+***Step 14.*** After successfully importing the Glances dashboard, you should be able
 to watch graphs showing metrics from your server as provided by glances
 via influxdb.
  
+***Step 15.*** Ensure all services are running.
+```
+systemctl status glances.service
+systemctl status influxdb.service
+systemctl status grafana-server
+```
