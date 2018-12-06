@@ -51,7 +51,9 @@ Step 5. Next, you need to download the glances configuration file provided by th
 developer using wget command as shown:
 
 ```mkdir ~/.config/glances/```
+
 ```cd /root/.config/glances/```
+
 ```wget https://raw.githubusercontent.com/nicolargo/glances/master/conf/glances.conf```
 
 Step 6. In order to export Glances stats to an InfluxDB database, you need the
@@ -99,6 +101,7 @@ Run ```influx``` and this should say Connected to http://localhost:8086 version 
 InfluxDB shell version: 1.6.2
 
 ```CREATE DATABASE glances```
+
 ```SHOW DATABASES```
 
 To ensure the Database was created. 
@@ -135,6 +138,7 @@ sslcacert=/etc/pki/tls/certs/ca-bundle.crt
 ```
 Run 
 ```sudo yum makecache fast```
+
 ```sudo yum -y install grafana```
 
 Step 9. Once you have installed Grafana, reload systemd manager
