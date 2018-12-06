@@ -1,4 +1,9 @@
 # Install Glances, InfluxDB and Grafana to Monitor CentOS
+### Sources: 
+
+https://computingforgeeks.com/install-grafana-and-influxdb-on-centos-7/
+
+https://www.tecmint.com/install-glances-influxdb-grafana-to-monitor-centos-7/
 
 ## About
 Glances is a free open source, modern, cross-platform, real-time top and
