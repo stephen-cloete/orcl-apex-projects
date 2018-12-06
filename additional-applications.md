@@ -102,14 +102,19 @@ Step 8. Next, you need to create a database in InfluxDB for storing data from
 glances. The influx command which is included in the InfluxDB packages is
 the simplest way to interact with the database. So execute influx to start
 the CLI and automatically connect to the local InfluxDB instance.
-Run ```influx``` and this should say Connected to http://localhost:8086 version 1.6.2
+Run ```influx``` and this should say:
+```
+Connected to http://localhost:8086 version 1.6.2
 InfluxDB shell version: 1.6.2
+```
 
 ```CREATE DATABASE glances```
 
 ```SHOW DATABASES```
 
 To ensure the Database was created. 
+
+```
 name: databases
 name
 ----
@@ -117,6 +122,7 @@ _internal
 glances
 >
 To exit the InfluxQL shell, type exit and hit Enter.
+```
 
 ***Then reload systemd manager configuration, start the glances service,
 view its status, and enable it to auto-start at boot time.***
