@@ -40,6 +40,9 @@ My Personal CV https://apex.oracle.com/pls/apex/f?p=SC
 ## apex-ridesharing 
 LOOP Ridesharing https://loop-ridesharing.co.za
 
+## apex-infrastructure-centos
+Step-by-step guide to installing Oracle APEX on your local machine
+
 # Oracle APEX Getting Started Guide
 
 ###  Getting Started with Oracle APEX on apex.oracle.com
