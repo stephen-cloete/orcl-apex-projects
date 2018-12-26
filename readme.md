@@ -5,7 +5,7 @@
 # Oracle Application Express (APEX) Projects
 Created by Stephen Cloete
 
-# A Collection of my Oracle APEX Projects
+# A Collection of Oracle APEX Projects
 
 ## apex-blogger 
 TODO
