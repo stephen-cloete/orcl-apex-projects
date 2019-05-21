@@ -37,7 +37,7 @@ TODO
 IONIC Cordova Application hosting Oracle APEX Application
 
 ## apex-mycv
-My Personal CV https://apex.oracle.com/pls/apex/f?p=SC
+My Personal CV http://stephencloete.co.za
 
 ## apex-ridesharing 
 LOOP Ridesharing https://loop-ridesharing.co.za
