@@ -1,0 +1,15 @@
+-- Copy to install/targets.local.sql (git-ignored), list your real targets and
+-- run it as HEALTH_MON after install_schema.sql (deploy.sh runs it if present).
+merge into hm_targets d
+using (
+  select 'My website' name, 'HTTP' target_type, 'https://www.example.org/' endpoint,
+         200 expected_status, 1500 warn_threshold, 5000 crit_threshold, 5 interval_min,
+         'Production website' description from dual
+) s
+on (d.name = s.name)
+when matched then update set d.endpoint = s.endpoint
+when not matched then insert
+  (name, target_type, endpoint, expected_status, warn_threshold, crit_threshold, interval_min, description)
+values
+  (s.name, s.target_type, s.endpoint, s.expected_status, s.warn_threshold, s.crit_threshold, s.interval_min, s.description);
+commit;
