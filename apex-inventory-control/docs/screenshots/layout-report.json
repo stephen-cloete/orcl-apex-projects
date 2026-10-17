@@ -1,0 +1,702 @@
+{
+ "phone/login": {
+  "vw": 390,
+  "scrollW": 390,
+  "bodyScrollW": 390,
+  "overflow": false,
+  "bad": [],
+  "fields": [
+   [
+    41,
+    308
+   ],
+   [
+    41,
+    308
+   ],
+   [
+    41,
+    308
+   ]
+  ],
+  "tables": [],
+  "errors": []
+ },
+ "phone/home": {
+  "vw": 390,
+  "scrollW": 390,
+  "bodyScrollW": 390,
+  "overflow": false,
+  "bad": [],
+  "fields": [],
+  "tables": [
+   [
+    340,
+    340
+   ],
+   [
+    340,
+    340
+   ]
+  ],
+  "errors": [],
+  "title": "Home"
+ },
+ "phone/items": {
+  "vw": 390,
+  "scrollW": 390,
+  "bodyScrollW": 390,
+  "overflow": false,
+  "bad": [],
+  "fields": [
+   [
+    8,
+    374
+   ],
+   [
+    8,
+    374
+   ],
+   [
+    8,
+    374
+   ]
+  ],
+  "tables": [
+   [
+    340,
+    340
+   ]
+  ],
+  "errors": [],
+  "title": "Items"
+ },
+ "phone/item": {
+  "vw": 390,
+  "scrollW": 390,
+  "bodyScrollW": 390,
+  "overflow": false,
+  "bad": [],
+  "fields": [
+   [
+    25,
+    340
+   ],
+   [
+    25,
+    340
+   ],
+   [
+    25,
+    340
+   ],
+   [
+    25,
+    340
+   ],
+   [
+    25,
+    340
+   ],
+   [
+    25,
+    340
+   ],
+   [
+    25,
+    340
+   ],
+   [
+    25,
+    340
+   ],
+   [
+    25,
+    340
+   ],
+   [
+    25,
+    340
+   ],
+   [
+    25,
+    340
+   ]
+  ],
+  "tables": [],
+  "errors": [],
+  "title": "Item"
+ },
+ "phone/stock": {
+  "vw": 390,
+  "scrollW": 390,
+  "bodyScrollW": 390,
+  "overflow": false,
+  "bad": [],
+  "fields": [
+   [
+    8,
+    374
+   ],
+   [
+    8,
+    374
+   ]
+  ],
+  "tables": [
+   [
+    340,
+    340
+   ]
+  ],
+  "errors": [],
+  "title": "Stock on Hand"
+ },
+ "phone/movements": {
+  "vw": 390,
+  "scrollW": 390,
+  "bodyScrollW": 390,
+  "overflow": false,
+  "bad": [],
+  "fields": [
+   [
+    8,
+    374
+   ],
+   [
+    8,
+    374
+   ]
+  ],
+  "tables": [
+   [
+    340,
+    340
+   ]
+  ],
+  "errors": [],
+  "title": "Stock Movements"
+ },
+ "phone/new-movement": {
+  "vw": 390,
+  "scrollW": 390,
+  "bodyScrollW": 390,
+  "overflow": false,
+  "bad": [],
+  "fields": [
+   [
+    25,
+    340
+   ],
+   [
+    25,
+    340
+   ],
+   [
+    25,
+    340
+   ],
+   [
+    25,
+    340
+   ],
+   [
+    25,
+    340
+   ],
+   [
+    25,
+    340
+   ],
+   [
+    25,
+    340
+   ]
+  ],
+  "tables": [],
+  "errors": [],
+  "title": "New Movement"
+ },
+ "phone/locations": {
+  "vw": 390,
+  "scrollW": 390,
+  "bodyScrollW": 390,
+  "overflow": false,
+  "bad": [],
+  "fields": [],
+  "tables": [
+   [
+    340,
+    340
+   ]
+  ],
+  "errors": [],
+  "title": "Locations"
+ },
+ "phone/location": {
+  "vw": 390,
+  "scrollW": 390,
+  "bodyScrollW": 390,
+  "overflow": false,
+  "bad": [],
+  "fields": [
+   [
+    25,
+    340
+   ],
+   [
+    25,
+    340
+   ],
+   [
+    25,
+    340
+   ],
+   [
+    25,
+    340
+   ]
+  ],
+  "tables": [],
+  "errors": [],
+  "title": "Location"
+ },
+ "phone/categories": {
+  "vw": 390,
+  "scrollW": 390,
+  "bodyScrollW": 390,
+  "overflow": false,
+  "bad": [],
+  "fields": [],
+  "tables": [
+   [
+    340,
+    340
+   ]
+  ],
+  "errors": [],
+  "title": "Categories"
+ },
+ "phone/category": {
+  "vw": 390,
+  "scrollW": 390,
+  "bodyScrollW": 390,
+  "overflow": false,
+  "bad": [],
+  "fields": [
+   [
+    25,
+    340
+   ],
+   [
+    25,
+    340
+   ],
+   [
+    25,
+    340
+   ]
+  ],
+  "tables": [],
+  "errors": [],
+  "title": "Category"
+ },
+ "phone/suppliers": {
+  "vw": 390,
+  "scrollW": 390,
+  "bodyScrollW": 390,
+  "overflow": false,
+  "bad": [],
+  "fields": [],
+  "tables": [
+   [
+    340,
+    340
+   ]
+  ],
+  "errors": [],
+  "title": "Suppliers"
+ },
+ "phone/supplier": {
+  "vw": 390,
+  "scrollW": 390,
+  "bodyScrollW": 390,
+  "overflow": false,
+  "bad": [],
+  "fields": [
+   [
+    25,
+    340
+   ],
+   [
+    25,
+    340
+   ],
+   [
+    25,
+    340
+   ],
+   [
+    25,
+    340
+   ],
+   [
+    25,
+    340
+   ]
+  ],
+  "tables": [],
+  "errors": [],
+  "title": "Supplier"
+ },
+ "desktop/login": {
+  "vw": 1280,
+  "scrollW": 1280,
+  "bodyScrollW": 1280,
+  "overflow": false,
+  "bad": [],
+  "fields": [
+   [
+    443,
+    394
+   ],
+   [
+    443,
+    394
+   ],
+   [
+    443,
+    394
+   ]
+  ],
+  "tables": [],
+  "errors": []
+ },
+ "desktop/home": {
+  "vw": 1280,
+  "scrollW": 1280,
+  "bodyScrollW": 1280,
+  "overflow": false,
+  "bad": [],
+  "fields": [],
+  "tables": [
+   [
+    1214,
+    1214
+   ],
+   [
+    1214,
+    1214
+   ]
+  ],
+  "errors": [],
+  "title": "Home"
+ },
+ "desktop/items": {
+  "vw": 1280,
+  "scrollW": 1280,
+  "bodyScrollW": 1280,
+  "overflow": false,
+  "bad": [],
+  "fields": [
+   [
+    16,
+    616
+   ],
+   [
+    648,
+    296
+   ],
+   [
+    960,
+    304
+   ]
+  ],
+  "tables": [
+   [
+    1214,
+    1214
+   ]
+  ],
+  "errors": [],
+  "title": "Items"
+ },
+ "desktop/item": {
+  "vw": 1280,
+  "scrollW": 1280,
+  "bodyScrollW": 1280,
+  "overflow": false,
+  "bad": [],
+  "fields": [
+   [
+    33,
+    599
+   ],
+   [
+    648,
+    599
+   ],
+   [
+    33,
+    599
+   ],
+   [
+    648,
+    599
+   ],
+   [
+    33,
+    296
+   ],
+   [
+    345,
+    288
+   ],
+   [
+    648,
+    288
+   ],
+   [
+    952,
+    296
+   ],
+   [
+    33,
+    1214
+   ],
+   [
+    33,
+    599
+   ],
+   [
+    648,
+    599
+   ]
+  ],
+  "tables": [],
+  "errors": [],
+  "title": "Item"
+ },
+ "desktop/stock": {
+  "vw": 1280,
+  "scrollW": 1280,
+  "bodyScrollW": 1280,
+  "overflow": false,
+  "bad": [],
+  "fields": [
+   [
+    16,
+    616
+   ],
+   [
+    648,
+    616
+   ]
+  ],
+  "tables": [
+   [
+    1214,
+    1214
+   ]
+  ],
+  "errors": [],
+  "title": "Stock on Hand"
+ },
+ "desktop/movements": {
+  "vw": 1280,
+  "scrollW": 1280,
+  "bodyScrollW": 1280,
+  "overflow": false,
+  "bad": [],
+  "fields": [
+   [
+    16,
+    408
+   ],
+   [
+    440,
+    824
+   ]
+  ],
+  "tables": [
+   [
+    1214,
+    1214
+   ]
+  ],
+  "errors": [],
+  "title": "Stock Movements"
+ },
+ "desktop/new-movement": {
+  "vw": 1280,
+  "scrollW": 1280,
+  "bodyScrollW": 1280,
+  "overflow": false,
+  "bad": [],
+  "fields": [
+   [
+    33,
+    599
+   ],
+   [
+    648,
+    599
+   ],
+   [
+    33,
+    599
+   ],
+   [
+    648,
+    599
+   ],
+   [
+    33,
+    599
+   ],
+   [
+    648,
+    599
+   ],
+   [
+    33,
+    1214
+   ]
+  ],
+  "tables": [],
+  "errors": [],
+  "title": "New Movement"
+ },
+ "desktop/locations": {
+  "vw": 1280,
+  "scrollW": 1280,
+  "bodyScrollW": 1280,
+  "overflow": false,
+  "bad": [],
+  "fields": [],
+  "tables": [
+   [
+    1214,
+    1214
+   ]
+  ],
+  "errors": [],
+  "title": "Locations"
+ },
+ "desktop/location": {
+  "vw": 1280,
+  "scrollW": 1280,
+  "bodyScrollW": 1280,
+  "overflow": false,
+  "bad": [],
+  "fields": [
+   [
+    33,
+    397
+   ],
+   [
+    446,
+    801
+   ],
+   [
+    33,
+    1214
+   ],
+   [
+    33,
+    599
+   ]
+  ],
+  "tables": [],
+  "errors": [],
+  "title": "Location"
+ },
+ "desktop/categories": {
+  "vw": 1280,
+  "scrollW": 1280,
+  "bodyScrollW": 1280,
+  "overflow": false,
+  "bad": [],
+  "fields": [],
+  "tables": [
+   [
+    1214,
+    1214
+   ]
+  ],
+  "errors": [],
+  "title": "Categories"
+ },
+ "desktop/category": {
+  "vw": 1280,
+  "scrollW": 1280,
+  "bodyScrollW": 1280,
+  "overflow": false,
+  "bad": [],
+  "fields": [
+   [
+    33,
+    801
+   ],
+   [
+    850,
+    397
+   ],
+   [
+    33,
+    1214
+   ]
+  ],
+  "tables": [],
+  "errors": [],
+  "title": "Category"
+ },
+ "desktop/suppliers": {
+  "vw": 1280,
+  "scrollW": 1280,
+  "bodyScrollW": 1280,
+  "overflow": false,
+  "bad": [],
+  "fields": [],
+  "tables": [
+   [
+    1214,
+    1214
+   ]
+  ],
+  "errors": [],
+  "title": "Suppliers"
+ },
+ "desktop/supplier": {
+  "vw": 1280,
+  "scrollW": 1280,
+  "bodyScrollW": 1280,
+  "overflow": false,
+  "bad": [],
+  "fields": [
+   [
+    33,
+    599
+   ],
+   [
+    648,
+    599
+   ],
+   [
+    33,
+    599
+   ],
+   [
+    648,
+    599
+   ],
+   [
+    33,
+    599
+   ]
+  ],
+  "tables": [],
+  "errors": [],
+  "title": "Supplier"
+ }
+}
