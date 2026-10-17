@@ -11,7 +11,7 @@ Created by Stephen Cloete
 TODO
 
 ## apex-data-explorer
-TODO
+Ad-hoc, read-only query and analysis mini app over database schemas and REST/JSON sources: catalog search, query workbench with CSV export, saved/shared queries, query log. See [apex-data-explorer/data_explorer_readme.md](apex-data-explorer/data_explorer_readme.md).
 
 ## apex-database-monitoring
 TODO
