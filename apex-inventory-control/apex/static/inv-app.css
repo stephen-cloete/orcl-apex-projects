@@ -1,0 +1,76 @@
+/* Inventory Control (app 1301) - small layer on top of Universal Theme 26.1 / Vita.
+   Goal: no horizontal page overflow at 390px, inputs that line up, compact tables. */
+html, body { max-width: 100%; overflow-x: hidden; }
+.t-Body-content, .t-Body-contentInner { min-width: 0; }
+
+/* hero on home */
+.inv-hero { padding: 16px 16px 4px; }
+.inv-hero .t-Region-title, .inv-hero h2 { font-size: 1.5rem; }
+.inv-lead { margin: 0 0 12px; color: var(--ut-body-text-color, #444); opacity: .8; }
+.inv-hero .t-Region-headerItems--buttons,
+.inv-hero .t-ButtonRegion-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+
+/* badge list stays inside the viewport */
+.inv-overview .t-BadgeList { flex-wrap: wrap; }
+.inv-overview .t-BadgeList-item { min-width: 0; flex: 1 1 140px; }
+.inv-overview .t-BadgeList-value { font-size: 1.25rem; white-space: nowrap; }
+
+.inv-overview .t-Report-pagination, .inv-overview .t-Report-links,
+.inv-low-stock .t-Report-pagination, .inv-recent .t-Report-pagination { display: none; }
+
+/* status pills */
+.inv-pill { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: .75rem;
+            font-weight: 600; background: #e6e6e6; color: #444; white-space: nowrap; }
+.inv-pill--ok { background: #dff3e6; color: #1d6b3a; }
+.inv-pill--warn { background: #fde7d6; color: #9a3d07; }
+
+/* tables never push the page wider than the screen */
+.t-Report-wrap, .t-Report-tableWrap { max-width: 100%; overflow-x: auto; }
+.t-Report-report td, .t-Report-report th { white-space: nowrap; }
+.t-Report-report .inv-sku { white-space: nowrap; overflow-wrap: normal; }
+.t-Report-report td[headers="NAME"], .t-Report-report td[headers="ITEM_NAME"],
+.t-Report-report td[headers="DESCRIPTION"] { white-space: normal; min-width: 8rem; }
+
+/* toolbars / forms: fields stretch to their grid column and line up */
+.inv-toolbar { margin-bottom: 8px; }
+.inv-page .t-Form-fieldContainer--stretchInputs .t-Form-inputContainer,
+.inv-page .t-Form-fieldContainer--stretchInputs .t-Form-itemWrapper { width: 100%; }
+.inv-page select.selectlist, .inv-page input.text_field, .inv-page input.number_field,
+.inv-page textarea.textarea { width: 100%; max-width: 100%; box-sizing: border-box; }
+
+/* phone: hide secondary columns, tighten padding */
+@media (max-width: 640px) {
+  .t-Body-contentInner { padding-left: 8px; padding-right: 8px; }
+  .inv-rpt th#CATEGORY, .inv-rpt td[headers="CATEGORY"],
+  .inv-rpt th#REORDER_LEVEL, .inv-rpt td[headers="REORDER_LEVEL"],
+  .inv-rpt th#VALUE, .inv-rpt td[headers="VALUE"],
+  .inv-rpt th#REFERENCE, .inv-rpt td[headers="REFERENCE"],
+  .inv-rpt th#CREATED_BY, .inv-rpt td[headers="CREATED_BY"],
+  .inv-rpt th#ITEM_NAME, .inv-rpt td[headers="ITEM_NAME"],
+  .inv-rpt th#DESCRIPTION, .inv-rpt td[headers="DESCRIPTION"],
+  .inv-rpt th#CONTACT_NAME, .inv-rpt td[headers="CONTACT_NAME"],
+  .inv-rpt th#PHONE, .inv-rpt td[headers="PHONE"],
+  .inv-rpt th#ITEMS, .inv-rpt td[headers="ITEMS"],
+  .inv-recent th#ITEM_NAME, .inv-recent td[headers="ITEM_NAME"],
+  .inv-recent th#LOCATION, .inv-recent td[headers="LOCATION"],
+  .inv-moves th#LOCATION, .inv-moves td[headers="LOCATION"],
+  .inv-low-stock th#NAME, .inv-low-stock td[headers="NAME"],
+  .inv-low-stock th#REORDER_LEVEL, .inv-low-stock td[headers="REORDER_LEVEL"] { display: none; }
+  .t-Report-cell, .t-Report-colHead { padding: 8px 5px; }
+  .t-Report-report td, .t-Report-report th { font-size: .8125rem; }
+  .t-Report-report td { white-space: normal; overflow-wrap: anywhere; }
+  .t-Report-report td[headers="NAME"], .t-Report-report td[headers="ITEM_NAME"],
+  .t-Report-report td[headers="DESCRIPTION"] { min-width: 0; }
+  .t-Report-report td[headers="QUANTITY"], .t-Report-report td[headers="ON_HAND"],
+  .t-Report-report td[headers="QTY"], .t-Report-report td[headers="STATUS"],
+  .t-Report-report td[headers="TXN_DATE"], .t-Report-report td[headers="TXN_TYPE_LABEL"],
+  .t-Report-report td[headers="SKU"], .t-Report-report .inv-sku { white-space: nowrap; overflow-wrap: normal; }
+  .t-Region-headerItems--buttons .t-Button { padding-left: 10px; padding-right: 10px; }
+  .t-Region-headerItems--title { min-width: 0; }
+}
+
+/* login */
+.inv-login .t-Login-logo { display: flex; align-items: center; justify-content: center;
+  width: 64px; height: 64px; margin: 0 auto 8px; border-radius: 16px;
+  background: var(--ut-palette-primary, #2e6bd2); color: #fff; font-size: 32px; }
+.inv-login-tagline { text-align: center; margin: 0 0 8px; opacity: .75; }
