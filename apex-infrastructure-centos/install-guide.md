@@ -165,8 +165,28 @@ sudo ./scripts/06-smoke-test.sh                                  # on the host
 ./scripts/06-smoke-test.sh --remote apex.example.com 203.0.113.10  # from your laptop, before DNS exists
 ```
 
-Then open `https://<APEX_SERVER_NAME>/ords/r/apex/workspace-sign-in/oauth2/` and sign in to your
-workspace.
+Then open `https://<APEX_SERVER_NAME>/ords/r/<workspace>/<app-alias>/` (or `/ords/f?p=<app>:1`) and
+sign in with an APEX account of that workspace.
+
+### 3.7 Things that bite (found while testing on a 1 GB Always Free VM + ADB 26ai)
+
+* **Heap for the `ords` CLI, not only the service.** On a ~700 MB host the JVM's default heap
+  (1/4 of RAM) is too small and even `ords --version` dies with `OutOfMemoryError: Java heap space`.
+  The scripts export `_JAVA_OPTIONS="-Xmx320m -XX:+UseSerialGC"` for every CLI call and the service.
+  Each CLI call still takes ~20 s on such a host; ORDS itself needs ~60 s to start and ~350 MB RSS.
+* **App Builder / workspace sign-in on ADB.** ADB sets `APEX_BUILDER_AUTHENTICATION=ADB`, which signs
+  developers in through the ADB-managed ORDS single sign-on endpoint (`/ords/_sso/...`). A
+  customer-managed ORDS does not provide that endpoint, so on this path **your applications work**
+  (public pages, *Oracle APEX Accounts* / social / custom authentication), but App Builder and the
+  workspace sign-in return 404. Keep using the ADB's own APEX URL for development, or (only if this
+  ORDS is the sole entry point) change the instance's builder authentication. Turning on
+  `feature.sdw` does not help.
+* **`X-Forwarded-Proto`.** Without `security.httpsHeaderCheck` APEX on ADB (`REQUIRE_HTTPS=A`) loops or
+  refuses sessions behind nginx.
+* **`IMAGE_PREFIX` on ADB is `/i/<version>/`.** nginx must answer `/i/<version>/...`; the CDN proxy
+  in the template does that without touching the ADB setting.
+* **DB network ACL.** The host (its public IP, or its VCN) must be in the ADB access control list, or
+  the pool shows `ORA-12506`/timeouts in `journalctl -u ords`.
 
 ## 4. Operations
 

@@ -19,7 +19,7 @@ else
   RES=(--resolve "$NAME:443:127.0.0.1" --resolve "$NAME:80:127.0.0.1")
   echo "== host checks"
   t "java >= 17"                    bash -c 'java -version 2>&1 | head -1 | grep -E "\"(1[7-9]|2[0-9])"'
-  t "ords binary"                   bash -c "$ORDS_HOME/bin/ords --version 2>/dev/null | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+[.0-9]*' | head -1 | grep ."
+  t "ords binary"                   bash -c "cd /tmp && _JAVA_OPTIONS='-Xmx${ORDS_HEAP_MB:-320}m' $ORDS_HOME/bin/ords --version 2>/dev/null | grep -Eo 'Services [0-9][^ ]*' | grep ."
   t "ords.service active"           systemctl is-active ords
   t "ords bound to loopback only"   bash -c "ss -ltn | awk '{print \$4}' | grep -E ':${ORDS_HTTP_PORT}\$' | grep -v -E '^(0\.0\.0\.0|\*|\[::\]):' "
   t "ORDS direct 127.0.0.1:${ORDS_HTTP_PORT}"  expect '2..|3..' "http://127.0.0.1:${ORDS_HTTP_PORT}/ords/"
@@ -32,9 +32,11 @@ t "nginx /health"                   expect 200 "$B/health"
 t "http -> https redirect"          expect 301 "http://$NAME/ords/"
 t "TLS handshake (1.2+)"            bash -c "curl -sk ${RES[*]} -o /dev/null -w '%{ssl_verify_result} ok' --tlsv1.2 --max-time 20 $B/health"
 t "ORDS landing /ords/"             expect '2..|3..' "$B/ords/"
-t "APEX sign-in page renders"       bash -c "curl -skL ${RES[*]} --max-time 60 '$B/ords/r/apex/workspace-sign-in/oauth2/' | grep -Eio 'Oracle APEX|apex_ui|Sign In' | sort -u | tr '\n' ' ' | grep -i apex"
+if [ -n "${APEX_SMOKE_PAGE:-}" ]; then
+  t "APEX page renders ($APEX_SMOKE_PAGE)" bash -c "curl -skL ${RES[*]} --max-time 60 '$B$APEX_SMOKE_PAGE' | grep -Eo '/i/[0-9.]+/|apex_ui|Sign In' | sort -u | tr '\\n' ' ' | grep -E 'apex_ui|/i/'"
+else echo "  SKIP APEX page check (set APEX_SMOKE_PAGE, e.g. /ords/f?p=100:9999)"; fi
 t "APEX f?p=4550 (App Builder login)" expect '2..|3..' "$B/ords/f?p=4550:1"
-V=${APEX_VERSION:-$(curl -skL "${RES[@]}" --max-time 60 "$B/ords/r/apex/workspace-sign-in/oauth2/" | grep -Eo '/i/[0-9]+\.[0-9]+\.[0-9]+/' | head -1 | tr -d /i)}
+V=${APEX_VERSION:-$(curl -skL "${RES[@]}" --max-time 60 "$B${APEX_SMOKE_PAGE:-/ords/}" | grep -Eo '/i/[0-9]+\.[0-9]+\.[0-9]+/' | head -1 | tr -d /i)}
 t "static /i/${V}/ Core CSS"        expect 200 "$B/i/${V}/apex_ui/css/Core.min.css"
 t "static /i/${V}/ desktop JS"      expect 200 "$B/i/${V}/libraries/apex/minified/desktop_all.min.js"
 t "no server version leak"          bash -c "! curl -skI ${RES[*]} --max-time 20 $B/health | grep -Ei '^server: .*[0-9]' "

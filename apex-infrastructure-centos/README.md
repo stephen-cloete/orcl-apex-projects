@@ -31,7 +31,41 @@ sudo ./scripts/install-all.sh
 
 ## Validation
 
+Tested end to end on 2026-10-17: Oracle Linux 7.9 on a 1 GB Always Free VM (2 vCPU, ~670 MB usable RAM,
+swap on), customer-managed ORDS 26.3 + nginx 1.20, talking to an Autonomous Database 26ai with APEX 26.1.5.
+The VM already served other sites through nginx; they kept answering throughout.
+
 * `shellcheck -S warning` clean on all scripts; cloud-init YAML parses.
-* ADB side tested on an Autonomous Database 26ai (APEX 26.1.5): runtime + gateway users created with
-  `sql/adb-customer-managed-ords.sql` logic and all `sql/adb-verify.sql` checks returning `YES`.
-* Host side: see the pull request for the end-to-end run status and screenshots (`screenshots/`).
+* `sql/adb-verify.sql`: runtime user OPEN, gateway user `NONE` auth, proxy grant YES, `ORDS_RUNTIME_ROLE` YES.
+* `scripts/06-smoke-test.sh` on the host: **16 passed, 0 failed**
+
+```
+== host checks
+  PASS java >= 17                          java version "21.0.12.1" LTS
+  PASS ords binary                         Services 26.3.0.r2721811
+  PASS ords.service active                 active
+  PASS ords bound to loopback only         127.0.0.1:8080
+  PASS ORDS direct 127.0.0.1:8080          HTTP 302
+  PASS nginx config valid                  valid
+  PASS ords.log has no pool errors
+== web checks (https://apex.example.com)
+  PASS nginx /health                       HTTP 200
+  PASS http -> https redirect              HTTP 301
+  PASS TLS handshake (1.2+)                ok
+  PASS ORDS landing /ords/                 HTTP 302
+  PASS APEX page renders (/ords/f?p=<app>:9999)   /i/26.1.5/ Sign In
+  PASS APEX f?p=4550 (App Builder login)   HTTP 302
+  PASS static /i/26.1.5/ Core CSS          HTTP 200
+  PASS static /i/26.1.5/ desktop JS        HTTP 200
+  PASS no server version leak
+== result: 16 passed, 0 failed
+```
+
+* Memory: ORDS RSS ~350 MB while starting, ~120 MB resident when idle (rest in swap); start-up ~60 s
+  with a short swap burst, then no swap-out at idle. See install-guide 3.7 for the caveats found
+  (CLI heap, App Builder sign-in on ADB).
+* An *Oracle APEX Accounts* application signed in successfully through nginx → ORDS → ADB.
+
+| ORDS landing page through nginx | APEX application login through nginx |
+|---|---|
+| ![ORDS landing](screenshots/ords-landing-via-nginx.png) | ![APEX login](screenshots/apex-app-login-via-nginx.png) |

@@ -11,6 +11,8 @@ load_env() {
   [ -r "$ENV_FILE" ] || die "missing $ENV_FILE (copy scripts/apex-ords.env.example)"
   # shellcheck disable=SC1090
   . "$ENV_FILE"
+  # The ords CLI is a JVM too; on small hosts the default heap (1/4 of RAM) is not enough.
+  export _JAVA_OPTIONS="${ORDS_CLI_JAVA_OPTIONS:--Xmx${ORDS_HEAP_MB:-320}m -XX:+UseSerialGC}"
 }
 el_major() { rpm -E '%{rhel}' 2>/dev/null || sed -n 's/^VERSION_ID="\?\([0-9]*\).*/\1/p' /etc/os-release; }
 pkg() { if command -v dnf >/dev/null; then dnf -y -q install "$@"; else yum -y -q install "$@"; fi; }
@@ -18,6 +20,7 @@ pkg() { if command -v dnf >/dev/null; then dnf -y -q install "$@"; else yum -y -
 BACKUP_DIR="${BACKUP_DIR:-/root/apex-ords-backup/$(date +%Y%m%d-%H%M%S)}"
 backup() { for f in "$@"; do [ -e "$f" ] || continue; mkdir -p "$BACKUP_DIR$(dirname "$f")"; cp -a "$f" "$BACKUP_DIR$f"; ok "backed up $f -> $BACKUP_DIR$f"; done; }
 # Print the ORDS runtime password to stdout (never echo it to the terminal yourself).
+ords_version() { "$ORDS_HOME/bin/ords" --version 2>/dev/null | grep -Eo 'Services [0-9][^ ]*' | awk '{print $2}' | head -1; }
 runtime_password() {
   if [ -n "${ORDS_DB_PASSWORD_FILE:-}" ] && [ -r "$ORDS_DB_PASSWORD_FILE" ]; then cat "$ORDS_DB_PASSWORD_FILE"
   elif [ -n "${ORDS_DB_PASSWORD_OCI_SECRET:-}" ]; then

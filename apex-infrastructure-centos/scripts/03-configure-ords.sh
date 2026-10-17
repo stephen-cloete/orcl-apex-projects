@@ -3,7 +3,7 @@
 #   DB_TYPE=adb   -> customer-managed ORDS against Autonomous Database (run sql/adb-customer-managed-ords.sql first)
 #   DB_TYPE=local -> "ords install" into a local/on-prem DB (installs/upgrades the ORDS schema; prompts for SYS)
 . "$(dirname "$0")/lib/common.sh"; need_root; load_env
-O() { sudo -u "$ORDS_USER" -H "$ORDS_HOME/bin/ords" --config "$ORDS_CONFIG" "$@"; }
+O() { (cd /tmp && sudo -u "$ORDS_USER" -H env _JAVA_OPTIONS="$_JAVA_OPTIONS" "$ORDS_HOME/bin/ords" --config "$ORDS_CONFIG" "$@"); }
 [ -d "$ORDS_CONFIG/global" ] && backup "$ORDS_CONFIG/global/settings.xml" "$ORDS_CONFIG/databases/default/pool.xml"
 
 if [ "$DB_TYPE" = adb ]; then

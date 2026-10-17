@@ -30,7 +30,7 @@ server {
     gzip_types text/css application/javascript application/json image/svg+xml text/plain;
 
     location = /health { access_log off; default_type text/plain; return 200 "ok\n"; }
-    location = / { return 302 /ords/r/apex/workspace-sign-in/oauth2/; }   # APEX 23.1+ landing; override per site
+    location = / { return 302 /ords/; }   # ORDS landing; point at your app, e.g. /ords/r/<ws>/<app>/
 
     # APEX static files (IMAGE_PREFIX is /i/ or /i/<version>/)
 @IMAGES_BLOCK@
