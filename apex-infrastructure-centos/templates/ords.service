@@ -1,0 +1,23 @@
+# /etc/systemd/system/ords.service  (rendered by scripts/04-ords-service.sh)
+[Unit]
+Description=Oracle REST Data Services (standalone) for Oracle APEX
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=@ORDS_USER@
+Group=@ORDS_USER@
+Environment=ORDS_CONFIG=@ORDS_CONFIG@
+Environment="JAVA_OPTIONS=-Xms128m -Xmx@ORDS_HEAP_MB@m -XX:+UseSerialGC -XX:MaxMetaspaceSize=192m -Djava.security.egd=file:/dev/./urandom"
+ExecStart=@ORDS_HOME@/bin/ords --config @ORDS_CONFIG@ serve
+SuccessExitStatus=143
+Restart=on-failure
+RestartSec=10
+LimitNOFILE=65536
+NoNewPrivileges=yes
+ProtectSystem=full
+PrivateTmp=yes
+
+[Install]
+WantedBy=multi-user.target

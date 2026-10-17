@@ -45,7 +45,10 @@ LOOP Ridesharing https://loop-ridesharing.co.za
 A Peer-to-Peer Ridesharing Application
 
 ## apex-infrastructure-centos
-Step-by-step guide to installing Oracle APEX on your local machine
+Step-by-step guide and scripts to run Oracle APEX on your own CentOS / Oracle Linux host:
+ORDS (standalone, Java 21) behind nginx, connected to an Autonomous Database or Oracle Database 23ai Free.
+Includes install/uninstall scripts, systemd and nginx templates, cloud-init and a smoke test.
+See [apex-infrastructure-centos/README.md](apex-infrastructure-centos/README.md).
 
 # Oracle APEX Getting Started Guide
 
