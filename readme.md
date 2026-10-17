@@ -28,7 +28,7 @@ TODO
 TODO
 
 ## apex-health-monitor
-TODO
+Website and database health monitor: HTTPS and SQL checks run by the scheduler, with uptime, response times and automatic incidents. See [apex-health-monitor/health-mon.md](apex-health-monitor/health-mon.md)
 
 ## apex-inventory-control
 TODO
