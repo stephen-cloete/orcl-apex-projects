@@ -1,0 +1,35 @@
+#cloud-config
+# cloud-init for a fresh Oracle Linux 8/9 (or Rocky/Alma) VM: Java 21 + ORDS + nginx in front of
+# an Autonomous Database. No secrets in here: the ORDS runtime password is read from OCI Vault with
+# instance-principal auth (give the instance's dynamic group "read secret-bundles" on that secret).
+# Fill in the four values marked CHANGE_ME, then paste as "user data" when launching the instance.
+package_update: true
+packages: [git, nginx, unzip, python3-pip]
+write_files:
+  - path: /etc/apex-ords/apex-ords.env
+    permissions: '0600'
+    content: |
+      ORDS_URL="https://download.oracle.com/otn_software/java/ords/ords-latest.zip"
+      ORDS_HOME="/opt/oracle/ords"
+      ORDS_CONFIG="/etc/ords/config"
+      ORDS_USER="ords"
+      JAVA_PKG=""
+      ORDS_HEAP_MB="512"
+      ORDS_HTTP_PORT="8080"
+      DB_TYPE="adb"
+      DB_CUSTOM_URL="CHANGE_ME_jdbc:oracle:thin:@(description=...TLS descriptor of the _low/_tp service...)"
+      ORDS_RUNTIME_USER="ORDS_PUBLIC_USER2"
+      ORDS_GATEWAY_USER="ORDS_PLSQL_GATEWAY2"
+      ORDS_DB_PASSWORD_FILE=""
+      ORDS_DB_PASSWORD_OCI_SECRET="CHANGE_ME_ocid1.vaultsecret.oc1..."
+      OCI_AUTH="instance_principal"
+      APEX_SERVER_NAME="CHANGE_ME_apex.example.com"
+      APEX_VERSION="CHANGE_ME_26.1.5"
+      APEX_IMAGES_MODE="cdn"
+      APEX_IMAGES_DIR="/var/www/apex/images"
+      TLS_CERT=""; TLS_KEY=""
+runcmd:
+  - [bash, -c, "pip3 install -q oci-cli && ln -sf /usr/local/bin/oci /usr/bin/oci"]
+  - [bash, -c, "git clone --depth 1 https://github.com/stephen-cloete/orcl-apex-projects.git /opt/orcl-apex-projects"]
+  - [bash, -c, "systemctl enable --now nginx"]
+  - [bash, -c, "cd /opt/orcl-apex-projects/apex-infrastructure-centos/scripts && ./install-all.sh > /var/log/apex-ords-install.log 2>&1"]

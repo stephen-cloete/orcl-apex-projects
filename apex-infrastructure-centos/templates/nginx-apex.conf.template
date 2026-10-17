@@ -1,0 +1,52 @@
+# /etc/nginx/conf.d/apex-ords-@SERVER_NAME@.conf  (rendered by scripts/05-nginx-apex.sh)
+# nginx = TLS + static /i/ ; ORDS standalone = 127.0.0.1:@ORDS_PORT@ (APEX, REST)
+upstream apex_ords_@UPSTREAM@ {
+    server 127.0.0.1:@ORDS_PORT@;
+    keepalive 16;
+}
+
+server {
+    listen 80;
+    server_name @SERVER_NAME@;
+    location = /health { access_log off; default_type text/plain; return 200 "ok\n"; }
+    location / { return 301 https://$host$request_uri; }
+}
+
+server {
+    listen 443 ssl http2;
+    server_name @SERVER_NAME@;
+
+    ssl_certificate     @TLS_CERT@;
+    ssl_certificate_key @TLS_KEY@;
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_session_cache shared:apex_ssl:5m;
+
+    server_tokens off;
+    add_header X-Content-Type-Options nosniff always;
+    add_header Referrer-Policy strict-origin-when-cross-origin always;
+
+    client_max_body_size 50m;          # APEX file uploads / app imports
+    gzip on;
+    gzip_types text/css application/javascript application/json image/svg+xml text/plain;
+
+    location = /health { access_log off; default_type text/plain; return 200 "ok\n"; }
+    location = / { return 302 /ords/; }   # ORDS landing; point at your app, e.g. /ords/r/<ws>/<app>/
+
+    # APEX static files (IMAGE_PREFIX is /i/ or /i/<version>/)
+@IMAGES_BLOCK@
+
+    # ORDS: APEX + REST
+    location /ords/ {
+        proxy_pass http://apex_ords_@UPSTREAM@;
+        proxy_http_version 1.1;
+        proxy_set_header Connection "";
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_set_header X-Forwarded-Proto https;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_read_timeout 300s;
+        proxy_buffers 16 32k;
+        proxy_buffer_size 64k;
+    }
+}

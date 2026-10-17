@@ -5,6 +5,37 @@ https://computingforgeeks.com/install-grafana-and-influxdb-on-centos-7/
 
 https://www.tecmint.com/install-glances-influxdb-grafana-to-monitor-centos-7/
 
+> **2026 update.** The steps below were written for CentOS 7 (now end of life). On Oracle Linux /
+> Rocky / Alma 8 or 9 use `dnf` instead of `yum`, `pip3 install glances influxdb` (Python 3), and the
+> current repositories:
+>
+> ```ini
+> # /etc/yum.repos.d/influxdata.repo
+> [influxdata]
+> name = InfluxData Repository - Stable
+> baseurl = https://repos.influxdata.com/stable/$basearch/main
+> enabled = 1
+> gpgcheck = 1
+> gpgkey = https://repos.influxdata.com/influxdata-archive_compat.key
+>
+> # /etc/yum.repos.d/grafana.repo
+> [grafana]
+> name=grafana
+> baseurl=https://rpm.grafana.com
+> repo_gpgcheck=1
+> enabled=1
+> gpgcheck=1
+> gpgkey=https://rpm.grafana.com/gpg.key
+> sslverify=1
+> sslcacert=/etc/pki/tls/certs/ca-bundle.crt
+> ```
+>
+> Glances exports to InfluxDB 1.x with `[influxdb]` and to 2.x with `[influxdb2]` in `glances.conf`.
+> Grafana no longer ships with `admin/admin` usable after first login: you must change it on first
+> sign-in. Keep ports 8086 and 3000 closed to the internet and put Grafana behind the same nginx
+> (see `templates/nginx-apex.conf.template`) instead of `firewall-cmd --add-port=3000/tcp`.
+> For the APEX stack itself, `scripts/06-smoke-test.sh` can be run from cron as a simple uptime check.
+
 ## About
 Glances is a free open source, modern, cross-platform, real-time top and
 htop-like monitoring tool with advanced features. It can run in different
