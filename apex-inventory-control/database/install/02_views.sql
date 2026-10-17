@@ -18,7 +18,13 @@ select i.item_id,
        nvl(st.qty_on_hand, 0)                     as qty_on_hand,
        nvl(st.qty_on_hand, 0) * i.unit_cost       as stock_value,
        case when i.active_yn = 'Y' and nvl(st.qty_on_hand, 0) <= i.reorder_level
-            then 'Y' else 'N' end                 as low_stock_yn
+            then 'Y' else 'N' end                 as low_stock_yn,
+       -- suggested order for low-stock items: the item's reorder qty when positive,
+       -- otherwise enough to get back to the reorder level (never less than 1)
+       case when i.active_yn = 'Y' and nvl(st.qty_on_hand, 0) <= i.reorder_level
+            then case when i.reorder_qty > 0 then i.reorder_qty
+                      else greatest(i.reorder_level - nvl(st.qty_on_hand, 0), 1) end
+       end                                        as suggested_order_qty
   from inv_items i
   left join inv_categories c on c.category_id = i.category_id
   left join inv_suppliers  s on s.supplier_id = i.supplier_id

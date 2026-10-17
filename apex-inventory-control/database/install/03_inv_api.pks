@@ -50,7 +50,7 @@ as
     p_uom           in inv_items.uom%type default 'EA',
     p_unit_cost     in inv_items.unit_cost%type default 0,
     p_reorder_level in inv_items.reorder_level%type default 0,
-    p_reorder_qty   in inv_items.reorder_qty%type default 0,
+    p_reorder_qty   in inv_items.reorder_qty%type default null,  -- null => greatest(reorder level, 1); must be > 0
     p_active_yn     in inv_items.active_yn%type default 'Y');
 
   -- Deletes an item with no stock history; otherwise marks it inactive.

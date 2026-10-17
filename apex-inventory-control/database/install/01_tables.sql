@@ -72,8 +72,8 @@ begin
                          constraint inv_items_cost_ck check (unit_cost >= 0),
            reorder_level number default 0 not null
                          constraint inv_items_reorder_lvl_ck check (reorder_level >= 0),
-           reorder_qty   number default 0 not null
-                         constraint inv_items_reorder_qty_ck check (reorder_qty >= 0),
+           reorder_qty   number default 1 not null
+                         constraint inv_items_reorder_qty_ck check (reorder_qty > 0),
            active_yn     varchar2(1 char) default 'Y' not null
                          constraint inv_items_active_ck check (active_yn in ('Y','N')),
            created_on    timestamp with local time zone default localtimestamp not null,
@@ -82,6 +82,17 @@ begin
            updated_by    varchar2(255 char),
            constraint inv_items_sku_uk unique (sku))]');
   ddl('create index inv_items_category_ix on inv_items (category_id)');
+  -- v1.1 upgrade: order quantity must be positive (never suggest ordering 0)
+  for c in (select search_condition_vc from all_constraints
+             where owner = sys_context('userenv', 'current_schema')
+               and table_name = 'INV_ITEMS' and constraint_name = 'INV_ITEMS_REORDER_QTY_CK'
+               and search_condition_vc not like '%> 0%')
+  loop
+    update inv_items set reorder_qty = greatest(reorder_level, 1) where reorder_qty <= 0;
+    execute immediate 'alter table inv_items drop constraint inv_items_reorder_qty_ck';
+    execute immediate 'alter table inv_items add constraint inv_items_reorder_qty_ck check (reorder_qty > 0)';
+  end loop;
+  execute immediate 'alter table inv_items modify (reorder_qty default 1)';
   ddl('create index inv_items_supplier_ix on inv_items (supplier_id)');
 
   ------------------------------------------------------------------ stock on hand

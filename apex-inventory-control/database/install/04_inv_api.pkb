@@ -214,30 +214,34 @@ as
     p_uom           in inv_items.uom%type default 'EA',
     p_unit_cost     in inv_items.unit_cost%type default 0,
     p_reorder_level in inv_items.reorder_level%type default 0,
-    p_reorder_qty   in inv_items.reorder_qty%type default 0,
+    p_reorder_qty   in inv_items.reorder_qty%type default null,
     p_active_yn     in inv_items.active_yn%type default 'Y')
   is
+    l_reorder_qty inv_items.reorder_qty%type := nvl(p_reorder_qty, greatest(nvl(p_reorder_level, 0), 1));
   begin
     require(p_sku, 'SKU');
     require(p_name, 'Name');
     require(p_uom, 'Unit of measure');
     check_yn(p_active_yn);
-    if nvl(p_unit_cost, 0) < 0 or nvl(p_reorder_level, 0) < 0 or nvl(p_reorder_qty, 0) < 0 then
-      fail(-20008, 'Unit cost, reorder level and reorder quantity cannot be negative.');
+    if nvl(p_unit_cost, 0) < 0 or nvl(p_reorder_level, 0) < 0 then
+      fail(-20008, 'Unit cost and reorder level cannot be negative.');
+    end if;
+    if l_reorder_qty <= 0 then
+      fail(-20017, 'Reorder quantity must be greater than 0.');
     end if;
     if p_item_id is null then
       insert into inv_items (sku, name, description, category_id, supplier_id, uom,
                              unit_cost, reorder_level, reorder_qty, active_yn)
       values (upper(trim(p_sku)), trim(p_name), p_description, p_category_id, p_supplier_id,
               upper(trim(p_uom)), nvl(p_unit_cost, 0), nvl(p_reorder_level, 0),
-              nvl(p_reorder_qty, 0), p_active_yn)
+              l_reorder_qty, p_active_yn)
       returning item_id into p_item_id;
     else
       update inv_items
          set sku = upper(trim(p_sku)), name = trim(p_name), description = p_description,
              category_id = p_category_id, supplier_id = p_supplier_id, uom = upper(trim(p_uom)),
              unit_cost = nvl(p_unit_cost, 0), reorder_level = nvl(p_reorder_level, 0),
-             reorder_qty = nvl(p_reorder_qty, 0), active_yn = p_active_yn,
+             reorder_qty = l_reorder_qty, active_yn = p_active_yn,
              updated_on = localtimestamp, updated_by = current_user_name
        where item_id = p_item_id;
       if sql%rowcount = 0 then fail(-20004, 'This item no longer exists.'); end if;

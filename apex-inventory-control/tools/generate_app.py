@@ -620,7 +620,7 @@ class Page:
     def item_id(self, name: str) -> int:
         for i, line in enumerate(self.lines):
             if line == f",p_name=>'{name}'":
-                return int(self.lines[i - 1].split("(")[2].rstrip(")"))
+                return int(self.lines[i - 1].rsplit("(", 1)[1].rstrip(")"))
         raise KeyError(name)
 
     def go(self, page: int, items: str = "", values: str = "") -> None:
@@ -679,13 +679,13 @@ def page_home() -> list[str]:
         template=T_REPORT_BADGE, comp_options="#DEFAULT#:t-BadgeList--responsive:t-BadgeList--large:t-BadgeList--flex",
         options="#DEFAULT#:t-Region--removeHeader:t-Region--noBorder", static_id="inv_overview", rows=1)
     p.report(3, "Low Stock", [
-        "select item_id, sku, name, qty_on_hand, reorder_level, reorder_qty",
+        "select item_id, sku, name, qty_on_hand, reorder_level, suggested_order_qty",
         "  from inv_items_v",
         " where low_stock_yn = 'Y'",
         " order by qty_on_hand - reorder_level, sku"],
         [("ITEM_ID", "Item", {"hidden": True}), ("SKU", "SKU", {"link": (3, "P3_ITEM_ID", "#ITEM_ID#")}),
          ("NAME", "Item", {}), ("QTY_ON_HAND", "On hand", {"align": "RIGHT"}),
-         ("REORDER_LEVEL", "Reorder at", {"align": "RIGHT"}), ("REORDER_QTY", "Order qty", {"align": "RIGHT"})],
+         ("REORDER_LEVEL", "Reorder at", {"align": "RIGHT"}), ("SUGGESTED_ORDER_QTY", "Order qty", {"align": "RIGHT"})],
         static_id="inv_low_stock", no_data="Nothing is below its reorder level.", icon="fa-warning", rows=10)
     p.report(4, "Recent Movements", [
         "select txn_id, txn_date, txn_type_label, sku, item_name,",
@@ -758,11 +758,14 @@ def page_item_form() -> list[str]:
     p.item(7, "P3_UNIT_COST", r, "Unit cost", "NATIVE_NUMBER_FIELD", new_line=False, colspan=3, default="0",
            fmt="FM999G999G990D00")
     p.item(8, "P3_REORDER_LEVEL", r, "Reorder level", "NATIVE_NUMBER_FIELD", new_line=False, colspan=3, default="0")
-    p.item(9, "P3_REORDER_QTY", r, "Reorder quantity", "NATIVE_NUMBER_FIELD", new_line=False, colspan=3, default="0")
+    p.item(9, "P3_REORDER_QTY", r, "Reorder quantity", "NATIVE_NUMBER_FIELD", new_line=False, colspan=3, default="1",
+           required=True, help_text="Ordered when stock is low (> 0)")
     p.item(10, "P3_DESCRIPTION", r, "Description", "NATIVE_TEXTAREA", maxlength=1000, height=3, size=60)
     p.item(11, "P3_ACTIVE_YN", r, "Status", "NATIVE_SELECT_LIST", lov=ACTIVE_LOV, null_text=None, default="Y", colspan=6)
     p.item(12, "P3_QTY_ON_HAND", r, "On hand (all locations)", "NATIVE_DISPLAY_ONLY", new_line=False, colspan=6)
     _, delete, save = form_buttons(p, r, "P3_ITEM_ID", 2, "item")
+    p.validation(1, "Reorder quantity > 0", "to_number(:P3_REORDER_QTY) > 0",
+                 "Reorder quantity must be greater than 0.", "P3_REORDER_QTY", button=save)
     p.process(1, "Load item", [
         "select sku, name, category_id, supplier_id, uom, unit_cost, reorder_level, reorder_qty,",
         "       description, active_yn, qty_on_hand || ' ' || uom",

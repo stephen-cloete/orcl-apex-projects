@@ -53,7 +53,7 @@ html, body { max-width: 100%; overflow-x: hidden; }
   .inv-recent th#ITEM_NAME, .inv-recent td[headers="ITEM_NAME"],
   .inv-recent th#LOCATION, .inv-recent td[headers="LOCATION"],
   .inv-low-stock th#NAME, .inv-low-stock td[headers="NAME"],
-  .inv-low-stock th#REORDER_QTY, .inv-low-stock td[headers="REORDER_QTY"] { display: none; }
+  .inv-low-stock th#REORDER_LEVEL, .inv-low-stock td[headers="REORDER_LEVEL"] { display: none; }
   .t-Report-cell, .t-Report-colHead { padding: 8px 5px; }
   .t-Report-report td, .t-Report-report th { font-size: .8125rem; }
   .t-Report-report td { white-space: normal; overflow-wrap: anywhere; }

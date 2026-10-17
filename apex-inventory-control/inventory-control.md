@@ -16,12 +16,16 @@ categories, stock on hand per location, and an immutable ledger of stock movemen
 * **Schema (`INV_*`)**: `inv_categories`, `inv_locations`, `inv_suppliers`, `inv_items`,
   `inv_stock` (on hand per item and location, never negative) and `inv_transactions`
   (the movement ledger). Identity keys, check constraints, FK indexes and audit columns.
-* **Views**: `inv_items_v` (on hand, stock value, low-stock flag), `inv_stock_v`,
+* **Views**: `inv_items_v` (on hand, stock value, low-stock flag and suggested order quantity), `inv_stock_v`,
   `inv_transactions_v`, `inv_dashboard_v`.
 * **PL/SQL API `inv_api`**: every write goes through it (`save_*`, `delete_*`,
   `post_transaction`). It validates input, locks stock rows (`select ... for update`, fixed
   lock order for transfers), refuses to take stock below zero, and raises readable
   `ORA-20001..20099` messages. Page processes contain only a single API call.
+* **Reorder rule**: an item's reorder quantity must be greater than 0 (API, table check and form
+  validation). If it's left empty, it defaults to the reorder level, with a minimum of 1. For a
+  low-stock item the suggested order is the reorder quantity when it is positive; otherwise it
+  is `greatest(reorder_level - on_hand, 1)`, so it is never 0.
 * **`inv_ui_error`**: the app's error handling function. It shows API messages without the
   ORA prefix and hides internal error detail.
 * **UI**: 13 pages (Home dashboard, Items + form, Stock on Hand, Stock Movements + new
@@ -37,6 +41,7 @@ apex-inventory-control/
     admin/00_create_schema_and_workspace.sql   run once as ADMIN (schema, workspace, INV_ADMIN)
     install.sql                                re-runnable install (tables, views, API, seed, error fn)
     install/01_tables.sql .. 06_inv_ui_error.sql
+    tests/test_reorder_suggestion.sql          API/view tests (rolls back)
     uninstall.sql                              drops INV_* objects (dev only)
   apex/
     f1301.sql                                  APEX 26.1.5 export (APEX_EXPORT) - source of truth
@@ -90,10 +95,12 @@ refresh the committed export with `tools/export_app.sh`.
 `tools/ui_check.py` signs in headlessly and checks every page at 390x844 and 1280x800: no
 horizontal page overflow, and every input, button and region inside the viewport. It saves
 full-page screenshots. `tools/flow_check.py` creates an item, receives stock, checks that
-over-issuing is refused with a friendly message, then issues stock and searches for it.
+over-issuing is refused with a friendly message, then issues stock and searches for it. It also checks that a reorder quantity of 0 is
+refused on the form and that every Home low-stock row suggests an order quantity above 0.
+`database/tests/test_reorder_suggestion.sql` tests the reorder rule in the API and view, then rolls back.
 
-Last run on EU DEV (2026-10-17): 26/26 page checks passed; the functional flow passed on
-phone and desktop. See `docs/screenshots/`.
+Last run on EU DEV (2026-10-17): 26/26 page checks, the functional flow (phone and desktop)
+and the 5 reorder-rule SQL tests all passed. See `docs/screenshots/`.
 
 | Phone 390px | Desktop 1280px |
 |---|---|
